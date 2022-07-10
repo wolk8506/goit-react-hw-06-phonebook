@@ -8,7 +8,6 @@ import { getContacts } from 'redux/contacts/contacts-selectors';
 export default function ContactForm() {
   const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
-  const onSubmit = contact => dispatch(actions.addContact(contact));
 
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
@@ -33,11 +32,12 @@ export default function ContactForm() {
       toast.warn(`${name} is already in contacts`);
       return;
     }
-
-    onSubmit({
-      name: name,
-      number: number,
-    });
+    dispatch(
+      actions.addContact({
+        name: name,
+        number: number,
+      })
+    );
 
     setName('');
     setNumber('');
